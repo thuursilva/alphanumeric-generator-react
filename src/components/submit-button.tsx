@@ -1,9 +1,12 @@
 import React from "react";
 
+type SubmitButtonProps = {
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-function SubmitButton() {
+function SubmitButton({ onClick }: SubmitButtonProps) {
     return (
-        <button type="button">
+        <button type="button" onClick={onClick}>
             Generate
         </button>
     )
