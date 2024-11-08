@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import SubmitButton from "./submit-button";
+import Header from "./header";
 
 function Form() {
 
@@ -17,7 +18,7 @@ function Form() {
     }
 
     //usestate para o input number
-    const [numberState, setNumberState] = useState(5)
+    const [numberState, setNumberState] = useState(12)
 
     //handle para o input number
     const handleNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,30 +33,59 @@ function Form() {
     }
 
     return (
-        <form>
-            <h2>Alphanumeric Generator</h2>
+        <>
+            <Header />
 
-            <input type="text" id="resultString" placeholder="Your text will appear here!" value={resultString} readOnly></input>
+            <section className="flex justify-center items-center py-40">
+                <form className="w-1/2 border-solid border-2 rounded flex flex-col gap-3 p-5 shadow-md">
 
-            <div>
-                <input type="checkbox" id="number" name="numberChecked" checked={stateCheck.numberChecked} onChange={handleChecked}></input>
-                <label htmlFor="number">Números</label>
+                    <input
+                        type="text"
+                        id="resultString"
+                        placeholder="Your text will appear here!"
+                        value={resultString}
+                        readOnly
+                        className="w-4/5 p-3 border-solid border-2 border-slate-300 rounded bg-gray-200 self-center"
+                    />
 
-                <input type="checkbox" id="letter" name="letterChecked" checked={stateCheck.letterChecked} onChange={handleChecked}></input>
-                <label htmlFor="letter">Letras</label>
+                    <ul className="flex gap-3 pt-4">
+                        <li>
+                            <input type="checkbox" id="number" name="numberChecked" checked={stateCheck.numberChecked} onChange={handleChecked} />
+                            <label className="pl-1" htmlFor="number">Numbers</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="letter" name="letterChecked" checked={stateCheck.letterChecked} onChange={handleChecked} />
+                            <label className="pl-1" htmlFor="letter">Letters</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="stringUppercase" name="stringUppercaseChecked" checked={stateCheck.stringUppercaseChecked} onChange={handleChecked} />
+                            <label className="pl-1" htmlFor="stringUppercase">Uppercase Letters</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="specialCharacter" name="specialCharacterChecked" checked={stateCheck.specialCharacterChecked} onChange={handleChecked} />
+                            <label className="pl-1" htmlFor="specialCharacter">Special Characters</label>
+                        </li>
+                    </ul>
 
-                <input type="checkbox" id="specialCharacter" name="specialCharacterChecked" checked={stateCheck.specialCharacterChecked} onChange={handleChecked}></input>
-                <label htmlFor="specialCharacter">Caracteres Especiais</label>
+                    <div className="flex gap-2 items-center pt-2">
+                        <label htmlFor="stringLength">Characters Length: </label>
+                        <input
+                            type="number"
+                            id="stringLength"
+                            name="numberState"
+                            value={numberState}
+                            onChange={handleNumber}
+                            min={1}
+                            max={70}
+                            className="border-solid border-2 border-slate-300 rounded text-center"
+                        />
+                    </div>
 
-                <input type="checkbox" id="stringUppercase" name="stringUppercaseChecked" checked={stateCheck.stringUppercaseChecked} onChange={handleChecked}></input>
-                <label htmlFor="stringUppercase">Caracteres Maiúsculos</label>
-            </div>
+                    <SubmitButton onClick={handleSubmit} />
+                </form>
+            </section>
+        </>
 
-            <label htmlFor="stringLength">Quantidade de Caracteres</label>
-            <input type="number" id="stringLength" name="numberState" value={numberState} onChange={handleNumber} min={1} max={70}></input>
-
-            <SubmitButton onClick={handleSubmit}/>
-        </form>
     )
 }
 
@@ -65,23 +95,23 @@ function generateString(length: number, options: {
     specialCharacterChecked: boolean,
     stringUppercaseChecked: boolean
 
-}){
+}) {
     let resultString = ''
     let characters = ''
 
-    if(options.letterChecked){
+    if (options.letterChecked) {
         characters += 'abcdefghijklmnopqrstuvwxyz'
     }
 
-    if(options.numberChecked){
+    if (options.numberChecked) {
         characters += '0123456789'
     }
 
-    if(options.specialCharacterChecked){
+    if (options.specialCharacterChecked) {
         characters += '!@#$%^&*()_+[]{}|;:,.<>?'
     }
 
-    if(options.stringUppercaseChecked){
+    if (options.stringUppercaseChecked) {
         characters += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     }
 
@@ -92,12 +122,12 @@ function generateString(length: number, options: {
         return '';
     }
 
-    for (let counter = 0; counter < length; counter ++) {
+    for (let counter = 0; counter < length; counter++) {
         resultString += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
 
     return resultString
-    
-  }
+
+}
 
 export default Form
