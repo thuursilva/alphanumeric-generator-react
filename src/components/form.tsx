@@ -117,8 +117,8 @@ function Form() {
         numberChecked: boolean,
         specialCharacterChecked: boolean,
         stringUppercaseChecked: boolean
+        }) {
 
-    }) {
         let resultString = ''
         let characters = ''
 
@@ -150,8 +150,10 @@ function Form() {
             characters += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         }
 
+        const charactersLength = characters.length
+
         for (let counter = 0; counter < length; counter++) {
-            resultString += characters.charAt(Math.floor(Math.random() * length))
+            resultString += characters.charAt(Math.floor(Math.random() * charactersLength))
         }
 
         return resultString
