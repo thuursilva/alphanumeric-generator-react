@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 type SubmitButtonProps = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
 
 function SubmitButton({ onClick }: SubmitButtonProps) {
   const [isPressed, setIsPressed] = useState(false);

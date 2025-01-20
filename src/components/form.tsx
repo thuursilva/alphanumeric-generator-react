@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import SubmitButton from "./submit-button";
+import CopyButton from "./copy_button";
+import copyIcon from '../images/copy_icon.png'
+import copiedIcon from '../images/copied_icon.png'
 import Header from "./header";
 
 function Form() {
@@ -50,6 +53,18 @@ function Form() {
         setResultString(generatedString)
     }
 
+    //usestate para copiar o texto
+    const [copiedState, setCopy] = useState(false)
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(resultString)
+        setCopy(true)
+
+        setTimeout(() => {
+            setCopy(false)
+        }, 2000)
+    }
+
     return (
         <>
             <Header />
@@ -61,16 +76,19 @@ function Form() {
                     {errorMessage}
                 </div>
 
-                <form className="w-1/2 border-solid border-2 rounded flex flex-col gap-3 p-5 shadow-md">
+                <form className="w-1/2 border-solid border-2 rounded flex flex-col gap-3 px-5 py-8 shadow-md">
 
-                    <input
-                        type="text"
-                        id="resultString"
-                        placeholder="Your text will appear here!"
-                        value={resultString}
-                        readOnly
-                        className="w-4/5 p-3 border-solid border-2 border-slate-300 rounded bg-gray-200 self-center"
-                    />
+                    <div className="flex items-center w-4/5 p-3 border-solid border-2 border-slate-300 rounded bg-gray-200 self-center">
+                        <input
+                            type="text"
+                            id="resultString"
+                            placeholder="Your text will appear here!"
+                            value={resultString}
+                            readOnly
+                            className="flex-1 bg-gray-200 p-2 outline-none"
+                        />
+                        <CopyButton onClick={handleCopy} copyIcon={copyIcon} copiedIcon={copiedIcon}/>
+                    </div>
 
                     <ul className="flex gap-3 pt-4">
                         <li>
@@ -117,7 +135,7 @@ function Form() {
         numberChecked: boolean,
         specialCharacterChecked: boolean,
         stringUppercaseChecked: boolean
-        }) {
+    }) {
 
         let resultString = ''
         let characters = ''
@@ -134,6 +152,7 @@ function Form() {
             return ''
         }
 
+
         if (options.letterChecked) {
             characters += 'abcdefghijklmnopqrstuvwxyz'
         }
@@ -148,6 +167,12 @@ function Form() {
 
         if (options.stringUppercaseChecked) {
             characters += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        }
+
+        if (!options.letterChecked && !options.numberChecked && !options.specialCharacterChecked && !options.stringUppercaseChecked) {
+            handleError(true)
+            handleErrorMessage('At least one character type must be selected!')
+            return ''
         }
 
         const charactersLength = characters.length
